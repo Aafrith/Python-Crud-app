@@ -8,6 +8,10 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Record
 
+from django.contrib import messages
+
+
+
 def home(request):
 
     return render(request, 'webapp/index.html')
@@ -22,6 +26,9 @@ def register(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
+
+            messages.success(request, 'Account created successfully!')
+
             return redirect("my-login")
 
     context = {'form': form}
@@ -44,6 +51,7 @@ def my_login(request):
 
             if user is not None:
                 auth.login(request, user)
+
                 return redirect("dashboard")
 
     context = {'form': form}
@@ -75,6 +83,9 @@ def create_record(request):
         form = CreateRecordForm(request.POST)
         if form.is_valid():
             form.save()
+
+            messages.success(request, 'Record created successfully!')
+
             return redirect("dashboard")
 
     context = {'form': form}
@@ -95,6 +106,9 @@ def update_record(request, pk):
         form = UpdateRecordForm(request.POST, instance=record)
         if form.is_valid():
             form.save()
+
+            messages.success(request, 'Your record has been updated successfully!')
+
             return redirect("dashboard")
 
     context = {'form': form}
@@ -124,6 +138,8 @@ def delete_record(request, pk):
 
     record.delete()
 
+    messages.success(request, 'Your record has been deleted successfully!')
+
     return redirect("dashboard")
 
 
@@ -134,6 +150,8 @@ def delete_record(request, pk):
 def user_logout(request):
 
     auth.logout(request)
+
+    messages.success(request, 'You have been logged out successfully!')
 
     return redirect("my-login")
 
