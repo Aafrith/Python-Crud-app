@@ -6,7 +6,7 @@
 
     <body>
 
-        <div class="container bg-light shadow-md p-5 form-layout">
+        <div class="container bg-light text-dark shadow-md p-5 form-layout">
             <h3>Login to your account</h3>
 
             <hr>
@@ -14,11 +14,14 @@
 
             <form method="POST" autocomplete="off">
                 {%csrf_token%}
-                {{form|crispy}}
+                {{form.username|as_crispy_field}}
+
+                <br>
+                {{form.password|as_crispy_field}}
 
                 <br>
 
-                <button type="submit" class="btn btn-primary w-100 btn-block p-2">Login</button>
+                <button type="submit" class="btn btn-primary w-100 btn-block p-2">Login &nbsp; <i class="fa fa-key" aria-hidden="true"></i></button>
             </form>
             
             <br>
